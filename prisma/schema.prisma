@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Visitors {
+  id Int @id @default(autoincrement())
+  fullName String
+  rg Int @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  flowControl FlowControl[]
+}
+
+model Condos {
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  units Units[]
+  flowControl FlowControl[]
+}
+
+model Units {
+  id Int @id @default(autoincrement())
+  name String
+  condos Condos @relation(fields: [condos_id], references: [id])
+  condos_id Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  flowControl FlowControl[]
+}
+
+model FlowControl {
+  visitors Visitors @relation(fields: [visitors_id], references: [id])
+  visitors_id Int
+
+  condos Condos @relation(fields: [condos_id], references: [id])
+  condos_id Int
+
+  units Units @relation(fields: [units_id], references:[id])
+  units_id Int
+
+  @@id([visitors_id, condos_id, units_id])
+
+  entry DateTime @default(now())
+  exit DateTime?
+}
+
+
+
