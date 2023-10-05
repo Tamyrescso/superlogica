@@ -1,8 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  HttpCode,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { VisitorsLogService } from './visitors-log.service';
 import { CreateVisitorsLogDto } from './dto/create-visitors-log.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { VisitorsLogEntity } from './entities/visitors-log.entity';
+import {
+  VisitorLogDetailEntity,
+  VisitorLogEntity,
+} from './entities/visitors-log.entity';
 import { UpdateVisitorsLogDto } from './dto/update-visitors-log.dto';
 
 @Controller('visitors-log')
@@ -13,21 +26,21 @@ export class VisitorsLogController {
   @Post('check-in')
   @HttpCode(201)
   @UsePipes(ValidationPipe)
-  @ApiCreatedResponse({ type: VisitorsLogEntity })
+  @ApiCreatedResponse({ type: VisitorLogEntity })
   create(@Body() createVisitorCheckIn: CreateVisitorsLogDto) {
     return this.visitorsLogService.visitorCheckIn(createVisitorCheckIn);
   }
 
   @Get()
   @HttpCode(200)
-  @ApiOkResponse({ type: VisitorsLogEntity, isArray: true })
+  @ApiOkResponse({ type: VisitorLogDetailEntity, isArray: true })
   findAll() {
     return this.visitorsLogService.findAll();
   }
 
   @Get(':id')
   @HttpCode(200)
-  @ApiOkResponse({ type: VisitorsLogEntity })
+  @ApiOkResponse({ type: VisitorLogDetailEntity })
   findOne(@Param('id') id: string) {
     return this.visitorsLogService.findOne(+id);
   }
@@ -35,7 +48,7 @@ export class VisitorsLogController {
   @Patch('check-out')
   @HttpCode(200)
   @UsePipes(ValidationPipe)
-  @ApiOkResponse({ type: VisitorsLogEntity })
+  @ApiOkResponse({ type: VisitorLogEntity })
   update(@Body() doVisitorCheckOut: UpdateVisitorsLogDto) {
     return this.visitorsLogService.visitorCheckOut(doVisitorCheckOut.id);
   }
