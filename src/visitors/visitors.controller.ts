@@ -13,7 +13,7 @@ import {
 import { VisitorsService } from './visitors.service';
 import { CreateVisitorDto } from './dto/create-visitor.dto';
 import { UpdateVisitorDto } from './dto/update-visitor.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiNoContentResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { VisitorEntity } from './entities/visitor.entity';
 
 @Controller('visitors')
@@ -56,6 +56,7 @@ export class VisitorsController {
 
   @Delete(':id')
   @HttpCode(204)
+  @ApiNoContentResponse()
   async remove(@Param('id') id: string) {
     return await this.visitorsService.remove(+id);
   }
