@@ -17,17 +17,15 @@ model Visitors {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  flowControl FlowControl[]
+  visitorsLog VisitorsLog[]
 }
 
 model Condos {
   id Int @id @default(autoincrement())
   name String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   units Units[]
-  flowControl FlowControl[]
+  visitorsLog VisitorsLog[]
 }
 
 model Units {
@@ -35,13 +33,13 @@ model Units {
   name String
   condos Condos @relation(fields: [condos_id], references: [id])
   condos_id Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  flowControl FlowControl[]
+  visitorsLog VisitorsLog[]
 }
 
-model FlowControl {
+model VisitorsLog {
+  id Int @id @default(autoincrement())
+
   visitors Visitors @relation(fields: [visitors_id], references: [id])
   visitors_id Int
 
@@ -50,8 +48,6 @@ model FlowControl {
 
   units Units @relation(fields: [units_id], references:[id])
   units_id Int
-
-  @@id([visitors_id, condos_id, units_id])
 
   entry DateTime @default(now())
   exit DateTime?
