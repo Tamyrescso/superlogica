@@ -13,7 +13,7 @@ import { VisitorsLogModule } from './visitors-log/visitors-log.module';
     VisitorsModule,
     UnitsModule,
     CondosModule,
-    VisitorsLogModule
+    VisitorsLogModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,12 +8,7 @@ import { UnitsService } from 'src/units/units.service';
 
 @Module({
   controllers: [VisitorsLogController],
-  providers: [
-    VisitorsLogService,
-    VisitorsService,
-    CondosService,
-    UnitsService,
-],
+  providers: [VisitorsLogService, VisitorsService, CondosService, UnitsService],
   imports: [PrismaModule],
 })
 export class VisitorsLogModule {}

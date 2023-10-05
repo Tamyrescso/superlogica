@@ -8,12 +8,12 @@ export class CondosService {
     const condos = await this.prisma.condos.findMany();
 
     return {
-      "info": {
-        "name": "Sistema de controle de acesso",
-        "description": "Lista de condomínios"
+      info: {
+        name: 'Sistema de controle de acesso',
+        description: 'Lista de condomínios',
       },
-      "items": condos
-    }
+      items: condos,
+    };
   }
 
   async findOne(id: number) {

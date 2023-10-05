@@ -8,12 +8,12 @@ export class UnitsService {
     const units = await this.prisma.units.findMany();
 
     return {
-      "info": {
-        "name": "Sistema de controle de acesso",
-        "description": "Lista de unidades"
+      info: {
+        name: 'Sistema de controle de acesso',
+        description: 'Lista de unidades',
       },
-      "items": units
-    }
+      items: units,
+    };
   }
 
   async findOne(id: number) {

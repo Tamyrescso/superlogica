@@ -1,25 +1,25 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CondoEntity {
-    @ApiProperty()
-    id: number;
+  @ApiProperty()
+  id: number;
 
-    @ApiProperty()
-    name: string;
+  @ApiProperty()
+  name: string;
 }
 
 class Info {
-    @ApiProperty()
-    name: string;
+  @ApiProperty()
+  name: string;
 
-    @ApiProperty()
-    description: string;
+  @ApiProperty()
+  description: string;
 
-    @ApiProperty()
-    items: CondoEntity[];
+  @ApiProperty()
+  items: CondoEntity[];
 }
 
 export class CondosEntity {
-    @ApiProperty()
-    info: Info;
+  @ApiProperty()
+  info: Info;
 }
