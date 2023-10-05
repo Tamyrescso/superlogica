@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateVisitorsLogDto } from './dto/create-visitors-log.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CondosService } from 'src/condos/condos.service';
@@ -18,13 +22,32 @@ export class VisitorsLogService {
     await this.validateVisitorLogInfo(createVisitorsLogDto);
     return await this.prisma.visitorsLog.create({ data: createVisitorsLogDto });
   }
-  
+
   async findAll() {
-    return await this.prisma.visitorsLog.findMany();
+    return await this.prisma.visitorsLog.findMany({
+      select: {
+        id: true,
+        visitors: true,
+        condos: true,
+        units: true,
+        entry: true,
+        exit: true,
+      },
+    });
   }
-  
+
   async findOne(id: number) {
-    const visitorLog = await this.prisma.visitorsLog.findUnique({ where: { id } });
+    const visitorLog = await this.prisma.visitorsLog.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        visitors: true,
+        condos: true,
+        units: true,
+        entry: true,
+        exit: true,
+      },
+    });
     if (!visitorLog) {
       throw new NotFoundException({
         error: `The visitor log with id ${id} does not exist`,
@@ -32,18 +55,18 @@ export class VisitorsLogService {
     }
     return visitorLog;
   }
-  
-  async visitorCheckOut (id: number) {
+
+  async visitorCheckOut(id: number) {
     const { exit } = await this.findOne(id);
 
     await this.validateIfWasAlreadyCheckedOut(exit, id);
-    
+
     return await this.prisma.visitorsLog.update({
       where: { id },
       data: { exit: new Date().toISOString() },
     });
   }
-  
+
   async validateVisitorLogInfo(createVisitorsLogDto: CreateVisitorsLogDto) {
     const { visitors_id, condos_id, units_id } = createVisitorsLogDto;
 
@@ -56,16 +79,14 @@ export class VisitorsLogService {
     await this.validateVisitorCheckOutBeforeNewCheckIn(visitors_id);
   }
 
-  async validateUnitExistenceInCondo(
-    condos_id: number,
-    units_id: number
-  ) {
+  async validateUnitExistenceInCondo(condos_id: number, units_id: number) {
     const units = await this.unitsDb.findAll();
-    const thereIsUnitInCondo = (units.items).some(({ id, condos_id: condo_id }) => (
-      id === units_id && condo_id === condos_id
-    ));
+    const thereIsUnitInCondo = units.items.some(
+      ({ id, condos_id: condo_id }) =>
+        id === units_id && condo_id === condos_id,
+    );
 
-    if(!thereIsUnitInCondo) {
+    if (!thereIsUnitInCondo) {
       throw new BadRequestException({
         error: `The requested unit ${units_id} does not belong to the specified condominium ${condos_id}.`,
       });
@@ -73,12 +94,12 @@ export class VisitorsLogService {
   }
 
   async validateVisitorCheckOutBeforeNewCheckIn(visitors_id: number) {
-    const visitorLogs = await this.prisma.visitorsLog.findMany({ where: { visitors_id } });
-    const thereIsCheckInWhithoutCheckOut = visitorLogs.some((log) => (
-      !log.exit
-    ));
-  
-    if(thereIsCheckInWhithoutCheckOut) {
+    const visitorLogs = await this.prisma.visitorsLog.findMany({
+      where: { visitors_id },
+    });
+    const thereIsCheckInWhithoutCheckOut = visitorLogs.some((log) => !log.exit);
+
+    if (thereIsCheckInWhithoutCheckOut) {
       throw new BadRequestException({
         error: `The visitor ${visitors_id} has an open check in.`,
       });
@@ -86,7 +107,7 @@ export class VisitorsLogService {
   }
 
   async validateIfWasAlreadyCheckedOut(exit: Date, visitorsLog_id: number) {
-    if(exit !== null) {
+    if (exit !== null) {
       throw new BadRequestException({
         error: `The visitor log ${visitorsLog_id} was already checked out.`,
       });
