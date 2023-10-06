@@ -3,21 +3,24 @@
 
 ## Resumo
 Desenvolvimento de uma api para controle de entrada e saída de visitantes em condomínios.
-A aplicação é capaz de cadastrar, listar, atualizar e e deletar um visitante no sistema.
+
+A aplicação é capaz de cadastrar, listar, atualizar e deletar um visitante no sistema.
+
 Listar os condomínios e unidades, mostrando a relação entre eles.
-Realiza o processo de liberação da entrada de um visitante em certo condomínio e unidade, lista as movimentações dos visitantes em cada unidade e realiza a baixa da saída do visitante.
+
+Realizar o processo de liberação da entrada de um visitante em certo condomínio e unidade, lista as movimentações dos visitantes em cada unidade e realiza a baixa da saída do visitante.
 
 ![modelagem_bd](https://github.com/Tamyrescso/superlogica/blob/master/images/db_model.png)
 
 ## Especificações técnicas
-  - API desenvolvida em NestJS com typescript
-  - Banco de dados PostgreSQL
-  - ORM Prisma
-  - A aplicação roda no Docker
-  - Usa o Swagger para facilitar o teste e documentação
-  - O banco de dados é randomicamente populado utilizando o Faker (exceto tabela de entrada/saída)
-  - Os dados do body são validados utilizando class-validator
-  - Foram desenvolvidos testes unitários utilizando Jest
+  - API desenvolvida em NestJS com typescript.
+  - Banco de dados PostgreSQL.
+  - ORM Prisma.
+  - A aplicação roda no Docker.
+  - Usa o Swagger para facilitar o teste e documentação.
+  - O banco de dados é randomicamente populado utilizando o Faker (exceto tabela de entrada/saída).
+  - Os dados do body são validados utilizando class-validator.
+  - Foram desenvolvidos testes unitários utilizando Jest.
 
 ![cobertura_testes](https://github.com/Tamyrescso/superlogica/blob/master/images/test_coverage.png)
 
@@ -77,6 +80,6 @@ Realiza o processo de liberação da entrada de um visitante em certo condomíni
 Para maiores informações sobre dto, entity e padrões de request/response, por favor, consultar a aplicação pelo Swagger.
 
 ## Pontos a melhorar:
-  - Implementar um soft delete para os registros de entrada/saída. Como é uma informação importante para a segurança do condomínio é importante que não possa ser atualizada ou deletada definitivamente.
-  - Criar um endpoint de retorno de movimentações baseada no id do visitante. Caso aconteça o erro de ele não ter feito checkout e quer fazer um checkin facilitaria para consultar.
+  - Implementar um soft delete para os registros de entrada/saída. Como é uma informação crítica para a segurança do condomínio é importante que não possa ser atualizada ou deletada definitivamente.
+  - Criar um endpoint de retorno de movimentações baseada no id do visitante. Caso aconteça o erro de não ter feito checkout e quer fazer um novo checkin, facilitaria para consultar.
   - Criar testes de integração e/ou e2e.
