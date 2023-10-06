@@ -19,7 +19,7 @@ export class VisitorsService {
     const visitor = await this.prisma.visitors.findUnique({ where: { id } });
     if (!visitor) {
       throw new NotFoundException({
-        error: `The visitor with id ${id} does not exist`,
+        message: `The visitor with id ${id} does not exist`,
       });
     }
     return visitor;

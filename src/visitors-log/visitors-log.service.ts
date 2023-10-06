@@ -50,7 +50,7 @@ export class VisitorsLogService {
     });
     if (!visitorLog) {
       throw new NotFoundException({
-        error: `The visitor log with id ${id} does not exist`,
+        message: `The visitor log with id ${id} does not exist`,
       });
     }
     return visitorLog;
@@ -81,14 +81,14 @@ export class VisitorsLogService {
 
   async validateUnitExistenceInCondo(condos_id: number, units_id: number) {
     const units = await this.unitsDb.findAll();
-    const thereIsUnitInCondo = units.items.some(
+    const thereIsUnitInCondo = (units.items).some(
       ({ id, condos_id: condo_id }) =>
         id === units_id && condo_id === condos_id,
     );
 
     if (!thereIsUnitInCondo) {
       throw new BadRequestException({
-        error: `The requested unit ${units_id} does not belong to the specified condominium ${condos_id}.`,
+        message: `The requested unit ${units_id} does not belong to the specified condominium ${condos_id}.`,
       });
     }
   }
@@ -101,15 +101,15 @@ export class VisitorsLogService {
 
     if (thereIsCheckInWhithoutCheckOut) {
       throw new BadRequestException({
-        error: `The visitor ${visitors_id} has an open check in.`,
+        message: `The visitor ${visitors_id} has an open check in.`,
       });
     }
   }
 
-  async validateIfWasAlreadyCheckedOut(exit: Date, visitorsLog_id: number) {
+  async validateIfWasAlreadyCheckedOut(exit: Date, visitorsLogId: number) {
     if (exit !== null) {
       throw new BadRequestException({
-        error: `The visitor log ${visitorsLog_id} was already checked out.`,
+        message: `The visitor log ${visitorsLogId} was already checked out.`,
       });
     }
   }

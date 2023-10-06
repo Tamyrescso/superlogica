@@ -20,7 +20,7 @@ export class UnitsService {
     const unit = await this.prisma.units.findUnique({ where: { id } });
     if (!unit) {
       throw new NotFoundException({
-        error: `The unit with id ${id} does not exist`,
+        message: `The unit with id ${id} does not exist`,
       });
     }
     return unit;

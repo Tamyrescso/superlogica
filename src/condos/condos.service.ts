@@ -20,7 +20,7 @@ export class CondosService {
     const condo = await this.prisma.condos.findUnique({ where: { id } });
     if (!condo) {
       throw new NotFoundException({
-        error: `The condominium with id ${id} does not exist`,
+        message: `The condominium with id ${id} does not exist`,
       });
     }
     return condo;
