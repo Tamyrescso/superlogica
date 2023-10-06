@@ -20,8 +20,8 @@ describe('AppModule', () => {
         CondosModule,
         VisitorsModule,
         VisitorsLogModule,
-        AppModule
-    ],
+        AppModule,
+      ],
     }).compile();
   });
 
@@ -30,7 +30,7 @@ describe('AppModule', () => {
     let condosService: CondosService;
     let unitsService: UnitsService;
     let visitorsService: VisitorsService;
-    let appService: AppService
+    let appService: AppService;
 
     beforeEach(() => {
       unitsService = app.get<UnitsService>(UnitsService);
@@ -45,19 +45,19 @@ describe('AppModule', () => {
     });
 
     it('Units should be defined', () => {
-        expect(unitsService).toBeDefined();
+      expect(unitsService).toBeDefined();
     });
 
     it('Condos should be defined', () => {
-        expect(condosService).toBeDefined();
+      expect(condosService).toBeDefined();
     });
 
     it('Visitors should be defined', () => {
-        expect(visitorsService).toBeDefined();
+      expect(visitorsService).toBeDefined();
     });
 
     it('Visitors Logs should be defined', () => {
-        expect(visitorsLogService).toBeDefined();
+      expect(visitorsLogService).toBeDefined();
     });
   });
 });

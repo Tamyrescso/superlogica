@@ -81,7 +81,7 @@ export class VisitorsLogService {
 
   async validateUnitExistenceInCondo(condos_id: number, units_id: number) {
     const units = await this.unitsDb.findAll();
-    const thereIsUnitInCondo = (units.items).some(
+    const thereIsUnitInCondo = units.items.some(
       ({ id, condos_id: condo_id }) =>
         id === units_id && condo_id === condos_id,
     );

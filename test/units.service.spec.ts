@@ -2,7 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { NotFoundException } from '@nestjs/common';
 import { UnitsService } from 'src/units/units.service';
-import { unitsFindAllMock, unitsFindOneMock, unitsPrismaMock } from './mocks/units.mock';
+import {
+  unitsFindAllMock,
+  unitsFindOneMock,
+  unitsPrismaMock,
+} from './mocks/units.mock';
 
 describe('UnitsService', () => {
   let service: UnitsService;
@@ -28,7 +32,6 @@ describe('UnitsService', () => {
 
   describe('findAll', () => {
     it('should return a list of units', async () => {
-
       const result = await service.findAll();
 
       expect(result).toEqual(unitsFindAllMock);
@@ -38,7 +41,6 @@ describe('UnitsService', () => {
 
   describe('findOne', () => {
     it('should return a unit by id', async () => {
-
       const result = await service.findOne(1);
 
       expect(result).toEqual(unitsFindOneMock);

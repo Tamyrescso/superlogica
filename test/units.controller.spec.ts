@@ -1,5 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { unitsFindAllMock, unitsFindOneMock, unitsPrismaMock } from './mocks/units.mock';
+import {
+  unitsFindAllMock,
+  unitsFindOneMock,
+  unitsPrismaMock,
+} from './mocks/units.mock';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UnitsController } from 'src/units/units.controller';
 import { UnitsService } from 'src/units/units.service';
@@ -14,7 +18,7 @@ describe('UnitsController', () => {
       controllers: [UnitsController],
       providers: [
         UnitsService,
-        { provide: PrismaService, useValue: unitsPrismaMock }
+        { provide: PrismaService, useValue: unitsPrismaMock },
       ],
     }).compile();
 
@@ -47,16 +51,20 @@ describe('UnitsController', () => {
 
     it('should handle non-existent unit', async () => {
       const unitId = '999';
-      jest.spyOn(service, 'findOne').mockRejectedValue(
-        new NotFoundException('The unit with id 999 does not exist')
-      );
+      jest
+        .spyOn(service, 'findOne')
+        .mockRejectedValue(
+          new NotFoundException('The unit with id 999 does not exist'),
+        );
 
       try {
         await controller.findOne(unitId);
       } catch (error) {
         expect(error).toBeInstanceOf(NotFoundException);
         expect(error.response.statusCode).toBe(404);
-        expect(error.response.message).toBe('The unit with id 999 does not exist');
+        expect(error.response.message).toBe(
+          'The unit with id 999 does not exist',
+        );
       }
     });
   });

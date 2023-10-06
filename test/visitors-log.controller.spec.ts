@@ -2,7 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { VisitorsLogController } from '../src/visitors-log/visitors-log.controller';
 import { VisitorsLogService } from '../src/visitors-log/visitors-log.service';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { checkInMock, checkInResponseMock, updateResponseMock, visitorsLogsFindAllMock, visitorsLogsPrismaMock } from './mocks/visitors-log.mock';
+import {
+  checkInMock,
+  checkInResponseMock,
+  updateResponseMock,
+  visitorsLogsFindAllMock,
+  visitorsLogsPrismaMock,
+} from './mocks/visitors-log.mock';
 import { NotFoundException } from '@nestjs/common';
 import { CondosService } from 'src/condos/condos.service';
 import { UnitsService } from 'src/units/units.service';
@@ -11,9 +17,6 @@ import { VisitorsService } from 'src/visitors/visitors.service';
 describe('VisitorsLogsController', () => {
   let controller: VisitorsLogController;
   let service: VisitorsLogService;
-  let condosService: CondosService;
-  let unitsService: UnitsService;
-  let visitorsService: VisitorsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -23,7 +26,7 @@ describe('VisitorsLogsController', () => {
         CondosService,
         VisitorsService,
         VisitorsLogService,
-        { provide: PrismaService, useValue: visitorsLogsPrismaMock }
+        { provide: PrismaService, useValue: visitorsLogsPrismaMock },
       ],
     }).compile();
 
@@ -37,8 +40,9 @@ describe('VisitorsLogsController', () => {
 
   describe('create', () => {
     it('should create a visitor check-in log', async () => {
-
-      jest.spyOn(service, 'visitorCheckIn').mockResolvedValue(checkInResponseMock);
+      jest
+        .spyOn(service, 'visitorCheckIn')
+        .mockResolvedValue(checkInResponseMock);
 
       const createdLog = await controller.create(checkInMock);
 
@@ -48,7 +52,6 @@ describe('VisitorsLogsController', () => {
 
   describe('findAll', () => {
     it('should return an array of visitor logs', async () => {
-
       jest.spyOn(service, 'findAll').mockResolvedValue(visitorsLogsFindAllMock);
 
       const allLogs = await controller.findAll();
@@ -61,7 +64,9 @@ describe('VisitorsLogsController', () => {
     it('should return a specific visitor log', async () => {
       const logId = '1';
 
-      jest.spyOn(service, 'findOne').mockResolvedValue(visitorsLogsFindAllMock[0]);
+      jest
+        .spyOn(service, 'findOne')
+        .mockResolvedValue(visitorsLogsFindAllMock[0]);
 
       const foundLog = await controller.findOne(logId);
 
@@ -83,8 +88,9 @@ describe('VisitorsLogsController', () => {
 
   describe('update', () => {
     it('should update a visitor check-out log', async () => {
-
-      jest.spyOn(service, 'visitorCheckOut').mockResolvedValue(updateResponseMock);
+      jest
+        .spyOn(service, 'visitorCheckOut')
+        .mockResolvedValue(updateResponseMock);
 
       const checkedOutLog = await controller.update({ id: 1 });
 

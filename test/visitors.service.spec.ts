@@ -2,7 +2,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { NotFoundException } from '@nestjs/common';
 import { VisitorsService } from 'src/visitors/visitors.service';
-import { visitorCreateMock, visitorCreateResponseMock, visitorFindAllMock, visitorIdUpdateMock, visitorPrismaMock, visitorUpdateMock, visitorUpdateResponseMock } from './mocks/visitors.mock';
+import {
+  visitorCreateMock,
+  visitorCreateResponseMock,
+  visitorFindAllMock,
+  visitorIdUpdateMock,
+  visitorPrismaMock,
+  visitorUpdateMock,
+  visitorUpdateResponseMock,
+} from './mocks/visitors.mock';
 
 describe('VisitorsService', () => {
   let service: VisitorsService;
@@ -28,7 +36,6 @@ describe('VisitorsService', () => {
 
   describe('create', () => {
     it('should create a new visitor', async () => {
-
       const result = await service.create(visitorCreateMock);
 
       expect(result).toBeDefined();
@@ -66,16 +73,23 @@ describe('VisitorsService', () => {
       } catch (error) {
         expect(error).toBeInstanceOf(NotFoundException);
         expect(error.status).toBe(404);
-        expect(error.message).toBe(`The visitor with id ${visitorId} does not exist`);
+        expect(error.message).toBe(
+          `The visitor with id ${visitorId} does not exist`,
+        );
       }
     });
   });
 
   describe('update', () => {
     it('should update a visitor by id', async () => {
-      jest.spyOn(prisma.visitors, 'findUnique').mockResolvedValue(visitorUpdateResponseMock);
+      jest
+        .spyOn(prisma.visitors, 'findUnique')
+        .mockResolvedValue(visitorUpdateResponseMock);
 
-      const result = await service.update(visitorIdUpdateMock, visitorUpdateMock);
+      const result = await service.update(
+        visitorIdUpdateMock,
+        visitorUpdateMock,
+      );
 
       expect(result).toBeDefined();
       expect(result).toBe(visitorUpdateResponseMock);
@@ -84,7 +98,9 @@ describe('VisitorsService', () => {
 
   describe('remove', () => {
     it('should remove a visitor by id', async () => {
-      jest.spyOn(prisma.visitors, 'findUnique').mockResolvedValue(visitorFindAllMock[4]);
+      jest
+        .spyOn(prisma.visitors, 'findUnique')
+        .mockResolvedValue(visitorFindAllMock[4]);
       const visitorId = 5;
       const result = await service.remove(visitorId);
 
@@ -99,7 +115,7 @@ describe('VisitorsService', () => {
         expect(error).toBeInstanceOf(NotFoundException);
         expect(error.status).toBe(404);
         expect(error.message).toBe(`The visitor with id 4444 does not exist`);
-      };
+      }
     });
   });
 });

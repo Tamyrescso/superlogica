@@ -1,7 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CondosService } from '../src/condos/condos.service';
 import { PrismaService } from '../src/prisma/prisma.service';
-import { condoFindAllMock, condoFindOneMock, condoPrismaMock } from './mocks/condos.mock';
+import {
+  condoFindAllMock,
+  condoFindOneMock,
+  condoPrismaMock,
+} from './mocks/condos.mock';
 import { NotFoundException } from '@nestjs/common';
 
 describe('CondosService', () => {
@@ -28,7 +32,6 @@ describe('CondosService', () => {
 
   describe('findAll', () => {
     it('should return a list of condos', async () => {
-
       const result = await service.findAll();
 
       expect(result).toEqual(condoFindAllMock);
@@ -38,7 +41,6 @@ describe('CondosService', () => {
 
   describe('findOne', () => {
     it('should return a condo by id', async () => {
-
       const result = await service.findOne(2);
 
       expect(result).toEqual(condoFindOneMock);
@@ -54,7 +56,9 @@ describe('CondosService', () => {
         await service.findOne(1);
       } catch (error) {
         expect(error).toBeInstanceOf(NotFoundException);
-        expect(error.message).toEqual('The condominium with id 1 does not exist');
+        expect(error.message).toEqual(
+          'The condominium with id 1 does not exist',
+        );
       }
     });
   });

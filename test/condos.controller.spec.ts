@@ -1,7 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CondosController } from '../src/condos/condos.controller';
 import { CondosService } from '../src/condos/condos.service';
-import { condoFindAllMock, condoFindOneMock, condoPrismaMock } from './mocks/condos.mock';
+import {
+  condoFindAllMock,
+  condoFindOneMock,
+  condoPrismaMock,
+} from './mocks/condos.mock';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { NotFoundException } from '@nestjs/common';
 
@@ -14,7 +18,7 @@ describe('CondosController', () => {
       controllers: [CondosController],
       providers: [
         CondosService,
-        { provide: PrismaService, useValue: condoPrismaMock }
+        { provide: PrismaService, useValue: condoPrismaMock },
       ],
     }).compile();
 
@@ -47,15 +51,19 @@ describe('CondosController', () => {
 
     it('should handle non-existent condo', async () => {
       const condoId = '999';
-      jest.spyOn(service, 'findOne').mockRejectedValue(
-        new NotFoundException('The condominium with id 999 does not exist')
-      );
+      jest
+        .spyOn(service, 'findOne')
+        .mockRejectedValue(
+          new NotFoundException('The condominium with id 999 does not exist'),
+        );
 
       try {
         await controller.findOne(condoId);
       } catch (error) {
         expect(error).toBeInstanceOf(NotFoundException);
-        expect(error.response.message).toBe('The condominium with id 999 does not exist');
+        expect(error.response.message).toBe(
+          'The condominium with id 999 does not exist',
+        );
       }
     });
   });
