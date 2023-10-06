@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile
     environment:
       DATABASE_URL: postgres://myuser:mypassword@postgres:5432/visitors
-    # restart: on-failure
+    restart: on-failure
     volumes:
       - ./:/workspace:z
     ports:
